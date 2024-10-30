@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Wyniki Graczy</title>
+    <title>Score Leader Board</title>
     <style>
         body {
             background-color: black;
@@ -46,13 +46,12 @@
 </head>
 <body>
     <img id="title-gif" src="images/New Piskel (1).gif" alt="Maze Walker Title">
-
-    <h1>Wyniki Graczy</h1>
+    <h1>Score</h1>
     <table id="leaderboard">
         <thead>
             <tr>
                 <th>Nickname</th>
-                <th>Punkty</th>
+                <th>Points</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -74,12 +73,8 @@
                         Object.entries(nicknameData)
                     )
                     .sort(([, pointsA], [, pointsB]) => pointsB - pointsA);
-
-
                 sortedData.forEach(([nickname, points], index) => {
                     const row = document.createElement("tr");
-
-                    // Assign classes based on ranking
                     if (index === 0) {
                         row.classList.add("gold");
                     } else if (index === 1) {
