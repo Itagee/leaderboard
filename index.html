@@ -23,7 +23,6 @@
             margin-bottom: 20px;
             color: #FFFF00;
             font-size: 2em;
-            font-family: 'Press Start 2P', sans-serif;
         }
 
         #title-gif {
@@ -43,7 +42,6 @@
             padding: 15px;
             border: 1px solid #FFFF00;
             background-color: #333;
-            color: #FFFF00;
             text-align: center;
             font-family: 'Press Start 2P', sans-serif;
         }
@@ -85,16 +83,8 @@
                 tableBody.innerHTML = "";
                 entries.forEach((entry, index) => {
                     const row = document.createElement("tr");
-                    if (index === 0) {
-                        row.style.backgroundColor = "#FFD700";
-                    } else if (index === 1) {
-                        row.style.backgroundColor = "#C0C0C0";
-                    } else if (index === 2) {
-                        row.style.backgroundColor = "#CD7F32";
-                    } else {
-                        row.style.backgroundColor = "#FFA500"; 
-                    }
-                    row.innerHTML = `<td>${entry.nickname}</td><td>${entry.points}</td>`;
+                    const nicknameColor = index === 0 ? "#FFD700" : index === 1 ? "#C0C0C0" : index === 2 ? "#CD7F32" : "#FF330D";
+                    row.innerHTML = `<td style="color: ${nicknameColor};">${entry.nickname}</td><td style="color: ${nicknameColor};">${entry.points}</td>`;
                     tableBody.appendChild(row);
                 });
             } catch (error) {
