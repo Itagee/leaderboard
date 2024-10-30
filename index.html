@@ -2,56 +2,63 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Score Leader Board</title>
+    <title>Maze Walker - Wyniki Graczy</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
         body {
-            background-color: black;
-            color: #FF330D;
-            font-family: Arial, sans-serif;
+            background-color: #000000;
+            color: #FFFF00;
+            font-family: 'Press Start 2P', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
             text-align: center;
         }
 
         h1 {
-            color: #FF330D;
+            margin-bottom: 20px;
+            color: #FFFF00;
+            font-size: 2em;
         }
 
         #title-gif {
             width: 300px;
-            margin-top: 20px;
+            height: auto;
+            margin-bottom: 20px;
         }
 
         table {
-            width: 60%;
-            margin: 20px auto;
+            width: 90%;
+            max-width: 600px;
+            margin: 0 auto;
             border-collapse: collapse;
-            color: black;
         }
 
         th, td {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid #FF330D;
+            padding: 15px;
+            border: 1px solid #FFFF00;
+            background-color: #333;
+            color: #FFFF00;
+            text-align: center;
         }
 
         th {
-            color: #FF330D;
+            font-weight: bold;
         }
-
-        /* Kolorowanie miejsc */
-        .gold { background-color: #FFD700; }
-        .silver { background-color: #C0C0C0; }
-        .bronze { background-color: #CD7F32; }
-        .orange { background-color: #FF330D; color: black; }
     </style>
 </head>
 <body>
     <img id="title-gif" src="New Piskel (1).gif" alt="Maze Walker Title">
-    <h1>Score</h1>
+    <h1>Wyniki Graczy</h1>
     <table id="leaderboard">
         <thead>
             <tr>
                 <th>Nickname</th>
-                <th>Points</th>
+                <th>Punkty</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -59,40 +66,39 @@
 
     <script>
         const url = 'https://mazewalker-d04b9-default-rtdb.europe-west1.firebasedatabase.app/.json';
-
         async function loadData() {
             try {
                 const response = await fetch(url);
                 const data = await response.json();
-
+                const entries = [];
+                for (const entry in data) {
+                    const nicknameData = data[entry];
+                    for (const nickname in nicknameData) {
+                        const points = nicknameData[nickname];
+                        entries.push({ nickname, points });
+                    }
+                }
+                entries.sort((a, b) => b.points - a.points);
                 const tableBody = document.querySelector("#leaderboard tbody");
                 tableBody.innerHTML = "";
-
-                const sortedData = Object.entries(data)
-                    .flatMap(([_, nicknameData]) => 
-                        Object.entries(nicknameData)
-                    )
-                    .sort(([, pointsA], [, pointsB]) => pointsB - pointsA);
-                sortedData.forEach(([nickname, points], index) => {
+                entries.forEach((entry, index) => {
                     const row = document.createElement("tr");
                     if (index === 0) {
-                        row.classList.add("gold");
+                        row.style.backgroundColor = "#FFD700";
                     } else if (index === 1) {
-                        row.classList.add("silver");
+                        row.style.backgroundColor = "#C0C0C0";
                     } else if (index === 2) {
-                        row.classList.add("bronze");
+                        row.style.backgroundColor = "#CD7F32";
                     } else {
-                        row.classList.add("orange");
+                        row.style.backgroundColor = "#FFA500"; 
                     }
-
-                    row.innerHTML = `<td>${nickname}</td><td>${points}</td>`;
+                    row.innerHTML = `<td>${entry.nickname}</td><td>${entry.points}</td>`;
                     tableBody.appendChild(row);
                 });
             } catch (error) {
                 console.error("Błąd wczytywania danych: ", error);
             }
         }
-
         loadData();
     </script>
 </body>
