@@ -4,43 +4,68 @@
     <meta charset="UTF-8">
     <title>Wyniki Graczy</title>
     <style>
+        body {
+            background-color: #000;
+            color: #000;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1 {
+            color: #FF330D;
+            text-align: center;
+            margin-bottom: 20px;
+        }
         table {
-            width: 100%;
+            width: 90%;
+            max-width: 600px;
+            margin: 0 auto;
             border-collapse: collapse;
         }
-        table, th, td {
-            border: 1px solid black;
-        }
         th, td {
-            padding: 10px;
-            text-align: left;
+            padding: 15px;
+            border: 1px solid #FF330D;
+            background-color: #FF330D;
+            color: #000;
+            text-align: center;
+        }
+        th {
+            font-weight: bold;
+        }
+        tr:nth-child(2) td {
+            background-color: #FFD700;
+        }
+        tr:nth-child(3) td {
+            background-color: #C0C0C0;
+        }
+        tr:nth-child(4) td {
+            background-color: #CD7F32;
         }
     </style>
 </head>
 <body>
-    <h1>Wyniki Graczy</h1>
-    <table id="leaderboard">
-        <thead>
-            <tr>
-                <th>Nickname</th>
-                <th>Punkty</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-
+    <div>
+        <h1>Wyniki Graczy</h1>
+        <table id="leaderboard">
+            <thead>
+                <tr>
+                    <th>Nickname</th>
+                    <th>Punkty</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
     <script>
-
         const url = 'https://mazewalker-d04b9-default-rtdb.europe-west1.firebasedatabase.app/.json';
-
         async function loadData() {
             try {
                 const response = await fetch(url);
                 const data = await response.json();
-
                 const tableBody = document.querySelector("#leaderboard tbody");
-                tableBody.innerHTML = ""; // Wyczyść tabelę
-
+                tableBody.innerHTML = "";
                 for (const entry in data) {
                     const nicknameData = data[entry];
                     for (const nickname in nicknameData) {
