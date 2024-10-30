@@ -2,62 +2,83 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Wyniki Graczy</title>
+    <title>Maze Walker - Score Board</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
         body {
-            background-color: #000;
-            color: #000;
-            font-family: Arial, sans-serif;
+            background-color: #FFFF00;
+            color: #FF330D;
+            font-family: 'Press Start 2P', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        h1 {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-        }
-        h1 {
+            margin-bottom: 20px;
             color: #FF330D;
-            text-align: center;
+            font-size: 2em;
+        }
+
+        #title-gif {
+            width: 300px;
+            height: auto;
             margin-bottom: 20px;
         }
+
         table {
             width: 90%;
             max-width: 600px;
             margin: 0 auto;
             border-collapse: collapse;
         }
+
         th, td {
             padding: 15px;
             border: 1px solid #FF330D;
             background-color: #FF330D;
-            color: #000;
+            color: #FFFF00;
             text-align: center;
         }
+
         th {
             font-weight: bold;
         }
+
         tr:nth-child(2) td {
             background-color: #FFD700;
         }
+
         tr:nth-child(3) td {
             background-color: #C0C0C0;
         }
+
         tr:nth-child(4) td {
             background-color: #CD7F32;
         }
     </style>
 </head>
 <body>
-    <div>
-        <h1>Wyniki Graczy</h1>
-        <table id="leaderboard">
-            <thead>
-                <tr>
-                    <th>Nickname</th>
-                    <th>Punkty</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
+    <img id="title-gif" src="New Piskel (1).gif" alt="Maze Walker Title">
+    <h1>Wyniki Graczy</h1>
+    <table id="leaderboard">
+        <thead>
+            <tr>
+                <th>Nickname</th>
+                <th>Punkty</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
     <script>
         const url = 'https://mazewalker-d04b9-default-rtdb.europe-west1.firebasedatabase.app/.json';
         async function loadData() {
