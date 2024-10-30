@@ -44,6 +44,7 @@
             background-color: #333;
             text-align: center;
             font-family: 'Press Start 2P', sans-serif;
+            color: #FFFF00; /* Kolor tekstu */
         }
 
         th {
@@ -65,4 +66,33 @@
     </table>
 
     <script>
-        const url = 'https://mazewalker-d04
+        const url = 'https://mazewalker-d04b9-default-rtdb.europe-west1.firebasedatabase.app/.json';
+        async function loadData() {
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const entries = [];
+                for (const entry in data) {
+                    const nicknameData = data[entry];
+                    for (const nickname in nicknameData) {
+                        const points = nicknameData[nickname];
+                        entries.push({ nickname, points });
+                    }
+                }
+                entries.sort((a, b) => b.points - a.points);
+                const tableBody = document.querySelector("#leaderboard tbody");
+                tableBody.innerHTML = "";
+                entries.forEach((entry, index) => {
+                    const row = document.createElement("tr");
+                    const nicknameColor = index === 0 ? "#FFD700" : index === 1 ? "#C0C0C0" : index === 2 ? "#CD7F32" : "#FF330D";
+                    row.innerHTML = `<td style="color: ${nicknameColor};">${entry.nickname}</td><td style="color: ${nicknameColor};">${entry.points}</td>`;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error("Błąd wczytywania danych: ", error);
+            }
+        }
+        loadData();
+    </script>
+</body>
+</html>
